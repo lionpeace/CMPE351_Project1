@@ -12,6 +12,12 @@ app.use(bodyParser.json());
 // Static files (HTML form sayfası)
 app.use(express.static(path.join(__dirname, 'public')));
 
+const files = [
+    { fileID: '1', fileName: 'John Doe', fileSize: 30 },
+    { fileID: '2', fileName: 'Jane Smith', fileSize: 25 },
+    { fileID: '3', fileName: 'Mike Johnson', fileSize: 40 }
+];
+
 // POST isteğini işleme
 app.post('/post', (req, res) => { 
     const { name, age } = req.body; 
@@ -40,6 +46,11 @@ app.patch('/patch', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'patch.html'));
 });
 
+const users = [
+    { userID: '1', name: 'John Doe', age: 30 },
+    { userID: '2', name: 'Jane Smith', age: 25 },
+    { userID: '3', name: 'Mike Johnson', age: 40 }
+];
 
 // DELETE isteğini işleme
 app.delete('/delete', (req, res) => {
@@ -51,7 +62,7 @@ app.delete('/delete', (req, res) => {
     }
 
     // Örneğin, silinecek kullanıcı veritabanında bulunmuyorsa 404 Not Found döndür
-    const userExists = Math.random() < 0.5;
+    const userExists = users.some(user => user.userID === userId);
     if (!userExists) {
         return res.status(404).json({ error: `User with ID ${userId} not found.` });
     }
